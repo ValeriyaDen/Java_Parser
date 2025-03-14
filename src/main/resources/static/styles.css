@@ -1,0 +1,124 @@
+/* Загальні стилі сторінки */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+/* Заголовок */
+h1 {
+    color: #333;
+}
+
+/* Контейнер кнопок */
+.buttons {
+    margin-bottom: 20px;
+}
+
+/* Стилізація кнопок */
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+/* Стиль кнопки для парсингу */
+.parse-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Стиль кнопки для експорту */
+.export-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Ефект при наведенні на кнопку */
+button:hover {
+    opacity: 0.8;
+}
+
+/* Стилізація таблиці */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Стилізація заголовків таблиці */
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+/* Колір заголовків таблиці */
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Фон для парних рядків таблиці */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Ефект при наведенні на рядок таблиці */
+tbody tr:hover {
+    background-color: #dfe6e9;
+}
+
+/* Повідомлення, якщо немає даних */
+.no-data {
+    font-size: 18px;
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Блок для виводу курсу валют */
+.exchange-rate {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 15px;
+    width: 50%;
+    background: #fffbcc;
+    border: 1px solid #ffdd57;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Стиль таблиці для курсу валют */
+.exchange-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+/* Стиль заголовків і комірок у таблиці валют */
+.exchange-table th, .exchange-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Колір заголовків таблиці валют */
+.exchange-table th {
+    background-color: #ffdd57;
+    color: black;
+}
+
+/* Стиль кнопки для отримання курсу валют */
+.rate-btn {
+    background-color: #ffdd57;
+}
