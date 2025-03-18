@@ -2,6 +2,7 @@ package com.example.restaurantcatalog.service;
 
 import com.example.restaurantcatalog.models.Restaurant;
 import com.example.restaurantcatalog.repository.RestaurantRepository;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,18 +16,13 @@ import java.util.stream.Collectors;
 
 // Сервіс для парсингу ресторанів із сайту
 @Service
+@RequiredArgsConstructor
 public class RestaurantParserService {
 
     // Базова URL-адреса каталогу ресторанів
     private static final String BASE_URL = "https://tomato.ua/ua/dnepr";
 
-    // Репозиторій для взаємодії з базою даних
-    private RestaurantRepository restaurantRepository;
-
-    // Конструктор для автоматичної ініціалізації репозиторію
-    public RestaurantParserService() {
-        this.restaurantRepository = restaurantRepository;
-    }
+    private final RestaurantRepository restaurantRepository;
 
     /*
      * Парсить ресторани із вказаної кількості сторінок.
@@ -41,11 +37,14 @@ public class RestaurantParserService {
             try {
                 // Формуємо URL для відповідної сторінки
                 String url = BASE_URL + "?page=" + page;
-                Document doc = Jsoup.connect(url).get(); // Завантажуємо HTML-код сторінки
-                Elements restaurantCards = doc.select(".search-item__center-content"); // Вибираємо всі блоки з ресторанами
-
+                // Завантажуємо HTML-код сторінки
+                Document doc = Jsoup.connect(url).get();
+                // Вибираємо всі блоки з ресторанами
+                Elements restaurantCards = doc.select
+                        (".search-item__center-content");
+                // Якщо ресторанів на сторінці немає — припиняємо парсинг
                 if (restaurantCards.isEmpty()) {
-                    break; // Якщо ресторанів на сторінці немає — припиняємо парсинг
+                    break;
                 }
 
                 System.out.println("Обробка сторінки: " + page);
@@ -53,19 +52,25 @@ public class RestaurantParserService {
 
                 for (Element card : restaurantCards) {
                     // Отримуємо назву ресторану
-                    String name = card.select(".search-item__center-title.desctop").text();
+                    String name = card.select
+                            (".search-item__center-title.desctop")
+                            .text();
 
                     // Отримуємо категорії (тип закладу)
-                    Elements categoryElements = card.select(".search-item__center-content-item a.dark-text");
+                    Elements categoryElements = card.select
+                            (".search-item__center-content-item a.dark-text");
                     String categories = categoryElements.stream()
                             .map(Element::text)
                             .collect(Collectors.joining(", "));
 
                     // Отримуємо посилання на сторінку ресторану
-                    String restaurantUrl = card.select("a[href]").attr("abs:href");
+                    String restaurantUrl = card.select("a[href]")
+                            .attr("abs:href");
 
-                    // Викликаємо додатковий метод для отримання детальної інформації про ресторан
-                    Restaurant restaurant = parseRestaurantDetails(name, categories, restaurantUrl);
+                    // Викликаємо додатковий метод
+                    // для отримання детальної інформації про ресторан
+                    Restaurant restaurant = parseRestaurantDetails
+                            (name, categories, restaurantUrl);
                     restaurants.add(restaurant);
                 }
 
@@ -77,7 +82,7 @@ public class RestaurantParserService {
         return restaurants; // Повертаємо список зібраних ресторанів
     }
 
-    /**
+    /*
      * Отримує детальну інформацію про ресторан.
      * Параметр name - це назва ресторану.
      * Параметр category - це тип закладу.
@@ -92,13 +97,15 @@ public class RestaurantParserService {
             String address = doc.select(".address").text();
 
             // Отримуємо тип кухні
-            Elements cuisineElements = doc.select("div.p-0.desctop_show a.dark-text span[itemprop=servesCuisine]");
+            Elements cuisineElements = doc.select
+                    ("div.p-0.desctop_show a.dark-text span[itemprop=servesCuisine]");
             String cuisine = cuisineElements.stream()
                     .map(Element::text)
                     .collect(Collectors.joining(", "));
 
             // Отримуємо посилання на офіційний сайт (якщо є)
-            String site = doc.select(".rest-main-info__title a").attr("href");
+            String site = doc.select(".rest-main-info__title a")
+                    .attr("href");
             if (site.isEmpty()) {
                 site = "Не вказано"; // Якщо немає сайту, пишемо "Не вказано"
             }
@@ -122,7 +129,9 @@ public class RestaurantParserService {
             return new Restaurant(null, name, category, address, rating, cuisine, site);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Restaurant(null, "Невідомий", "Не вказано", "Невідомо", 3.5, "Невідомо", "Не вказано");
+            return new Restaurant
+                    (null, "Невідомий", "Не вказано",
+                            "Невідомо", 3.5, "Невідомо", "Не вказано");
         }
     }
 }

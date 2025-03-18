@@ -7,14 +7,10 @@ body {
 }
 
 /* Заголовок */
-h1 {
-    color: #333;
-}
+h1 {    color: #333;   }
 
 /* Контейнер кнопок */
-.buttons {
-    margin-bottom: 20px;
-}
+.buttons {    margin-bottom: 20px;  }
 
 /* Стилізація кнопок */
 button {
@@ -40,9 +36,7 @@ button {
 }
 
 /* Ефект при наведенні на кнопку */
-button:hover {
-    opacity: 0.8;
-}
+button:hover {    opacity: 0.8;    }
 
 /* Стилізація таблиці */
 table {
@@ -74,9 +68,7 @@ tbody tr:nth-child(even) {
 }
 
 /* Ефект при наведенні на рядок таблиці */
-tbody tr:hover {
-    background-color: #dfe6e9;
-}
+tbody tr:hover {    background-color: #dfe6e9;    }
 
 /* Повідомлення, якщо немає даних */
 .no-data {
@@ -119,6 +111,4 @@ tbody tr:hover {
 }
 
 /* Стиль кнопки для отримання курсу валют */
-.rate-btn {
-    background-color: #ffdd57;
-}
+.rate-btn {    background-color: #ffdd57;      }

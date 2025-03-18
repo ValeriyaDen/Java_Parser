@@ -25,7 +25,8 @@
 
 <!-- Блок для курсу валют -->
 <div class="exchange-rate">
-    <div th:utext="${exchangeRateMessage}"></div> <!-- Вставляє HTML-код курсу валют -->
+    <!-- Вставляє HTML-код курсу валют -->
+    <div th:utext="${exchangeRateMessage}"></div>
     <a href="/rate">
         <button class="rate-btn">Отримати курс валют</button>
     </a>
@@ -51,7 +52,9 @@
         <td th:text="${restaurant.cuisine}"></td>
         <td>
             <span th:if="${restaurant.site == 'Не вказано'}">Не вказано</span>
-            <a th:if="${restaurant.site != 'Не вказано'}" th:href="${restaurant.site}" th:text="${restaurant.site}" target="_blank"></a>
+            <a th:if="${restaurant.site != 'Не вказано'}"
+               th:href="${restaurant.site}"
+               th:text="${restaurant.site}" target="_blank"></a>
         </td>
     </tr>
     </tbody>

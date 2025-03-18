@@ -58,14 +58,6 @@ public class RestaurantController {
         return ResponseEntity.ok(savedRestaurants);
     }
 
-    /*
-     * Отримати курс валют (USD та EUR).
-     * Повертає HTML-таблицю з курсами валют.
-     */
-    @GetMapping("/exchange-rates")
-    public String getExchangeRates() {
-        return exchangeRateService.getExchangeRates();
-    }
 
     /*
      * Експортувати ресторани у форматі Excel.
@@ -86,5 +78,13 @@ public class RestaurantController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(excelData); // Повертаємо файл у відповідь
+    }
+    /*
+     * Отримати курс валют (USD та EUR).
+     * Повертає HTML-таблицю з курсами валют.
+     */
+    @GetMapping("/exchange-rates")
+    public String getExchangeRates() {
+        return exchangeRateService.getExchangeRates();
     }
 }

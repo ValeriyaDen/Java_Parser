@@ -2,6 +2,7 @@ package com.example.restaurantcatalog.service;
 
 import com.example.restaurantcatalog.models.Restaurant;
 import com.example.restaurantcatalog.repository.RestaurantRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
@@ -11,14 +12,10 @@ import java.util.List;
 
 // Сервісний клас для експорту даних у формат Excel
 @Service
+@RequiredArgsConstructor
 public class ExcelExportService {
 
     private final RestaurantRepository restaurantRepository;
-
-    // Конструктор для автоматичної ініціалізації репозиторію через Spring
-    public ExcelExportService(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
-    }
 
     private void createRow(Row row, int columnIndex, String value) {
         row.createCell(columnIndex).setCellValue(value != null ? value : "Не вказано");
@@ -51,7 +48,8 @@ public class ExcelExportService {
             for (int i = 0; i < columns.length; i++) {
                 Cell cell = headerRow.createCell(i);
                 cell.setCellValue(columns[i]); // Встановлюємо назву стовпця
-                cell.setCellStyle(createHeaderStyle(workbook)); // Застосовуємо стиль заголовка
+                // Застосовуємо стиль заголовка
+                cell.setCellStyle(createHeaderStyle(workbook));
             }
 
             // Додаємо дані ресторанів у таблицю
@@ -73,18 +71,15 @@ public class ExcelExportService {
 
             // Записуємо дані у вихідний потік
             workbook.write(outputStream);
-            return outputStream.toByteArray(); // Повертаємо готовий Excel-файл у вигляді байтів
-
+            // Повертаємо готовий Excel-файл у вигляді байтів
+            return outputStream.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    /*
-     * Створює стиль заголовка таблиці (жирний шрифт).
-     * Повертає стиль комірки для заголовків
-     */
+    // Створює стиль заголовка таблиці (жирний шрифт) і повертає його
     private CellStyle createHeaderStyle(Workbook workbook) {
         CellStyle headerStyle = workbook.createCellStyle();
         Font font = workbook.createFont();

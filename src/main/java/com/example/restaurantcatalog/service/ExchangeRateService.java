@@ -11,17 +11,21 @@ import org.springframework.http.ResponseEntity;
 public class ExchangeRateService {
 
     // URL API ПриватБанку для отримання курсів валют
-    private static final String PRIVATBANK_API_URL = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";
+    private static final String PRIVATBANK_API_URL =
+            "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";
 
     /*
      * Метод отримує курси валют (USD та EUR)
      * Повертає HTML-таблицю з курсами валют або повідомлення про помилку.
      */
     public String getExchangeRates() {
-        RestTemplate restTemplate = new RestTemplate(); // Клієнт для виконання HTTP-запитів
-        ResponseEntity<String> response = restTemplate.getForEntity(PRIVATBANK_API_URL, String.class); // Виконуємо GET-запит
+        // Клієнт для виконання HTTP-запитів
+        RestTemplate restTemplate = new RestTemplate();
+        // Виконуємо GET-запит
+        ResponseEntity<String> response = restTemplate.
+                getForEntity(PRIVATBANK_API_URL, String.class);
 
-        // Перевіряємо, чи успішний запит (код 200-299)
+        // Перевіряємо, чи успішний запит (код 2хх)
         if (response.getStatusCode().is2xxSuccessful()) {
             try {
                 // Парсимо JSON-відповідь
@@ -34,10 +38,12 @@ public class ExchangeRateService {
 
                 // Проходимо по масиву валют
                 for (JsonNode currency : jsonArray) {
-                    if ("USD".equals(currency.get("ccy").asText())) { // Якщо валюта - долар
+                    // Якщо валюта - долар
+                    if ("USD".equals(currency.get("ccy").asText())) {
                         usdBuy = currency.get("buy").asDouble();
                         usdSale = currency.get("sale").asDouble();
-                    } else if ("EUR".equals(currency.get("ccy").asText())) { // Якщо валюта - євро
+                    // Якщо валюта - євро
+                    } else if ("EUR".equals(currency.get("ccy").asText())) {
                         eurBuy = currency.get("buy").asDouble();
                         eurSale = currency.get("sale").asDouble();
                     }
@@ -52,7 +58,6 @@ public class ExchangeRateService {
                                 "</table>",
                         usdBuy, usdSale, eurBuy, eurSale
                 );
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

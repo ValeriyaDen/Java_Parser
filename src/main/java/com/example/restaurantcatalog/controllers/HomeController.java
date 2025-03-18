@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor // Lombok автоматично генерує конструктор для фінальних змінних
+// Lombok автоматично генерує конструктор для фінальних змінних
+@RequiredArgsConstructor
 public class HomeController {
 
     // Репозиторій для взаємодії з базою даних
@@ -32,8 +33,10 @@ public class HomeController {
      */
     @GetMapping("/")
     public String homePage(Model model) {
-        List<Restaurant> restaurants = restaurantRepository.findAll(); // Отримуємо всі ресторани
-        model.addAttribute("restaurants", restaurants); // Передаємо їх у шаблон
+        // Отримуємо всі ресторани
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        // Передаємо їх у шаблон
+        model.addAttribute("restaurants", restaurants);
         return "index"; // Повертаємо назву HTML-файлу для відображення
     }
 
@@ -43,15 +46,18 @@ public class HomeController {
      */
     @PostMapping("/parse")
     public String parseRestaurants(@RequestParam(defaultValue = "2") int pageLimit) {
-        List<Restaurant> parsedRestaurants = parserService.parseRestaurants(pageLimit); // Парсимо сторінки
+        // Парсимо сторінки
+        List<Restaurant> parsedRestaurants = parserService.parseRestaurants(pageLimit);
 
         // Фільтруємо ресторани
         List<Restaurant> filteredRestaurants = parsedRestaurants.stream()
                 .filter(r -> !restaurantRepository.existsByName(r.getName()))
                 .toList();
 
-        restaurantRepository.saveAll(filteredRestaurants); // Зберігаємо нові ресторани у базі
-        return "redirect:/"; // Перенаправлення на головну сторінку для оновлення таблиці
+        // Зберігаємо нові ресторани у базі
+        restaurantRepository.saveAll(filteredRestaurants);
+        // Перенаправлення на головну сторінку для оновлення таблиці
+        return "redirect:/";
     }
 
     /*
@@ -60,8 +66,10 @@ public class HomeController {
      */
     @GetMapping("/rate")
     public String getExchangeRate(Model model) {
-        String exchangeRateMessage = exchangeRateService.getExchangeRates(); // Отримуємо курс валют
-        model.addAttribute("exchangeRateMessage", exchangeRateMessage); // Додаємо його в шаблон
+        // Отримуємо курс валют
+        String exchangeRateMessage = exchangeRateService.getExchangeRates();
+        // Додаємо його в шаблон
+        model.addAttribute("exchangeRateMessage", exchangeRateMessage);
 
         // Передаємо список ресторанів, щоб вони не зникали після оновлення сторінки
         List<Restaurant> restaurants = restaurantRepository.findAll();
