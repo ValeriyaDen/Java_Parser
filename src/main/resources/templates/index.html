@@ -37,6 +37,7 @@
     <tr>
         <th>ID</th>
         <th>Назва</th>
+        <th>Тип</th>
         <th>Адреса</th>
         <th>Рейтинг</th>
         <th>Кухня</th>
@@ -47,6 +48,7 @@
     <tr th:each="restaurant : ${restaurants}">
         <td th:text="${restaurant.id}"></td>
         <td th:text="${restaurant.name}"></td>
+        <td th:text="${restaurant.category}"></td>
         <td th:text="${restaurant.address}"></td>
         <td th:text="${restaurant.rating}"></td>
         <td th:text="${restaurant.cuisine}"></td>

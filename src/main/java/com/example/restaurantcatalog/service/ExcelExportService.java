@@ -43,7 +43,7 @@ public class ExcelExportService {
 
             // Додаємо заголовки стовпців
             Row headerRow = sheet.createRow(0);
-            String[] columns = {"ID", "Назва", "Адреса", "Рейтинг", "Кухня", "Сайт"};
+            String[] columns = {"ID", "Назва", "Тип", "Адреса", "Рейтинг", "Кухня", "Сайт"};
 
             for (int i = 0; i < columns.length; i++) {
                 Cell cell = headerRow.createCell(i);
@@ -58,10 +58,11 @@ public class ExcelExportService {
                 Row row = sheet.createRow(rowNum++);
                 createRow(row, 0, String.valueOf(restaurant.getId()));
                 createRow(row, 1, restaurant.getName());
-                createRow(row, 2, restaurant.getAddress());
-                createRow(row, 3, String.valueOf(restaurant.getRating()));
-                createRow(row, 4, restaurant.getCuisine());
-                createRow(row, 5, restaurant.getSite());
+                createRow(row, 2, restaurant.getCategory());
+                createRow(row, 3, restaurant.getAddress());
+                createRow(row, 4, String.valueOf(restaurant.getRating()));
+                createRow(row, 5, restaurant.getCuisine());
+                createRow(row, 6, restaurant.getSite());
             }
 
             // Автоматично розширюємо стовпці
